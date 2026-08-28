@@ -59,14 +59,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 :root{
   /* พื้นผิวและตัวอักษร */
-  --paper:#F3F8F4;
-  --paper-2:#E8F3EA;
+  --paper:#F8F6FC;
+  --paper-2:#F0EBFA;
   --surface:#FFFFFF;
   --ink:#211E1A;
   --ink-2:#57514A;
   --ink-3:#8B837A;
-  --line:#D9EBDD;
-  --line-2:#C7E0CC;
+  --line:#E5DBF5;
+  --line-2:#D7C7EE;
 
   /* สีประจำแต่ละระบบ */
   --c-plan:#E8590C;
@@ -95,7 +95,7 @@ body{
   color:var(--ink);
   background-color:var(--paper);
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(70,52,30,.10) 1px, transparent 0),
+    radial-gradient(circle at 1px 1px, rgba(91,33,182,.09) 1px, transparent 0),
     radial-gradient(ellipse 80% 50% at 50% 0%, rgba(139,92,246,.10), transparent 70%),
     radial-gradient(ellipse 70% 40% at 100% 100%, rgba(28,126,214,.08), transparent 70%);
   background-size:22px 22px, 100% 100%, 100% 100%;
@@ -366,11 +366,12 @@ body{
   margin-left:auto;
   cursor:pointer;
   color:#FFF0F7;
-  background:#DB2777;
+  background:linear-gradient(135deg,#F472B6 0%,#DB2777 55%,#9D174D 100%);
   border-color:#9D174D;
   font-weight:700;
   box-shadow:0 4px 12px -4px rgba(131,24,67,.65),
-             inset 0 1px 0 rgba(255,255,255,.22);
+             inset 0 1px 0 rgba(255,255,255,.35),
+             inset 0 -10px 16px -12px rgba(112,15,55,.55);
   transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
   user-select:none;
   -webkit-tap-highlight-color:transparent;
@@ -379,10 +380,11 @@ body{
 .chip.update-chip i{ color:#FBCFE8; }
 
 .chip.update-chip:hover{
-  background:#EC4899;
+  background:linear-gradient(135deg,#F9A8D4 0%,#EC4899 55%,#BE185D 100%);
   transform:translateY(-2px);
   box-shadow:0 8px 18px -5px rgba(131,24,67,.8),
-             inset 0 1px 0 rgba(255,255,255,.28);
+             inset 0 1px 0 rgba(255,255,255,.4),
+             inset 0 -10px 16px -12px rgba(112,15,55,.45);
 }
 
 .chip.update-chip:active{ transform:translateY(0) scale(.97); }
@@ -579,15 +581,25 @@ body{
 
 /* การ์ดที่ปิดใช้งานชั่วคราว — ทำให้จางลงแต่ยังมองเห็นอยู่ */
 .card.disabled{
-  --c:var(--ink-3);
   cursor:default;
-  opacity:.5;
+  opacity:.6;
   background:#F7F4EE;
   border-color:var(--line);
-  filter:saturate(.5);
+  border-left-color:var(--line-2);
 }
 
 .card.disabled .text h2{ color:var(--ink-2); }
+
+.card.disabled .icon{
+  background:var(--ink-3);
+  opacity:.55;
+  box-shadow:none;
+}
+
+.card.disabled .arrow{
+  color:var(--ink-3);
+  background:color-mix(in srgb, var(--ink-3) 13%, #fff);
+}
 
 .card.disabled:hover{
   transform:none;
