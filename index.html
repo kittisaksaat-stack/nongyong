@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>โรงเรียนวัดหนองยาง | Digital Platform</title>
+
+<meta name="description" content="ศูนย์รวมระบบดิจิทัลของโรงเรียนวัดหนองยาง — แผนงานและโครงการ เช็คเวลาเรียน การลา งานบุคคล และระบบร้านค้าสวัสดิการ">
+
+<!-- ===== FAVICON: ครอบคลุม iOS / Android / Windows / macOS / Linux ===== -->
+
+<!-- 1) SVG — คมทุกความละเอียด ใช้โดย Chrome, Edge, Firefox, Opera ทุก OS -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- 2) ICO หลายขนาดในไฟล์เดียว — Windows, Safari รุ่นเก่า, เบราว์เซอร์ที่ไม่รองรับ SVG -->
+<link rel="icon" type="image/x-icon" href="favicon.ico" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256">
+<link rel="shortcut icon" href="favicon.ico">
+
+<!-- 3) PNG สำรอง — Linux (GNOME/KDE), เบราว์เซอร์ที่เลือกขนาดเอง -->
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<!-- 4) iOS / iPadOS — "เพิ่มไปยังหน้าจอโฮม" (ต้องทึบแสง ไม่มีมุมมน iOS ตัดให้เอง) -->
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- 5) macOS Safari — ไอคอนแท็บที่ปักหมุด -->
+<link rel="mask-icon" href="safari-pinned-tab.svg" color="#7C3AED">
+
+<!-- 6) Android / Chrome / PWA — รวมไอคอน maskable สำหรับ adaptive icon -->
+<link rel="manifest" href="manifest.json">
+
+<!-- 7) Windows — ไทล์ใน Start Menu -->
+<meta name="msapplication-config" content="browserconfig.xml">
+<meta name="msapplication-TileColor" content="#7C3AED">
+<meta name="msapplication-TileImage" content="mstile-150x150.png">
+
+<!-- สีธีมของ address bar / status bar -->
+<meta name="theme-color" content="#7C3AED">
+<meta name="application-name" content="วัดหนองยาง">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="วัดหนองยาง">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+
+<style>
+
+:root{
+  /* พื้นผิวและตัวอักษร */
+  --paper:#F3F8F4;
+  --paper-2:#E8F3EA;
+  --surface:#FFFFFF;
+  --ink:#211E1A;
+  --ink-2:#57514A;
+  --ink-3:#8B837A;
+  --line:#D9EBDD;
+  --line-2:#C7E0CC;
+
+  /* สีประจำแต่ละระบบ */
+  --c-plan:#E8590C;
+  --c-attend:#0CA678;
+  --c-leave:#3B5BDB;
+  --c-safety:#0B7285;
+  --c-hr:#1C7ED6;
+  --c-server:#E03131;
+  --c-store:#F08C00;
+  --c-data:#868E96;
+  --c-ai:#D6336C;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  font-family:'Anuphan','Segoe UI',system-ui,-apple-system,sans-serif;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(70,52,30,.10) 1px, transparent 0),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(139,92,246,.10), transparent 70%),
+    radial-gradient(ellipse 70% 40% at 100% 100%, rgba(28,126,214,.08), transparent 70%);
+  background-size:22px 22px, 100% 100%, 100% 100%;
+  background-attachment:scroll, fixed, fixed;
+  min-height:100vh;
+  padding:26px 18px calc(34px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+
+  /* ห้ามตัดกลางคำ — ภาษาไทยไม่มีช่องว่างคั่นคำ ถ้าไม่กำหนด
+     เบราว์เซอร์บางตัวจะตัดตรงไหนก็ได้ ทำให้คำขาดกลางคัน
+     จุดที่ตัดได้จริงกำหนดด้วยแท็ก  ในเนื้อหา */
+  word-break:normal;
+  overflow-wrap:normal;
+  line-break:strict;
+  -webkit-hyphens:none;
+  hyphens:none;
+}
+
+.container{
+  max-width:520px;
+  margin:auto;
+}
+
+/* ---------- HEADER ---------- */
+
+.header{
+  position:relative;
+  background:#7C3AED;
+  background-image:
+    radial-gradient(ellipse 70% 70% at 100% 0%, rgba(244,114,182,.30), transparent 60%),
+    linear-gradient(135deg,#8B5CF6 0%,#7C3AED 50%,#5B21B6 100%);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:22px;
+  padding:26px 24px 22px;
+  overflow:hidden;
+  box-shadow:0 18px 36px -18px rgba(76,29,149,.60);
+  animation:riseIn .5s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* แสงอุ่นที่ลอยไปมาอยู่หลังหัวเว็บ */
+.header::before{
+  content:'';
+  position:absolute;
+  top:-150px;
+  left:-110px;
+  width:330px;
+  height:330px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,.25), rgba(255,255,255,.08) 45%, transparent 70%);
+  pointer-events:none;
+  animation:drift 15s ease-in-out infinite alternate;
+}
+
+@keyframes drift{
+  from{ transform:translate(0,0) scale(1); }
+  to  { transform:translate(150px,80px) scale(1.2); }
+}
+
+/* แถบสี 7 ช่องที่ไหลไปเรื่อยๆ บนขอบบน (หนึ่งช่องต่อหนึ่งระบบ) */
+.header::after{
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:200%;
+  height:5px;
+  background:repeating-linear-gradient(90deg,
+    rgba(255,255,255,.14) 0%, rgba(255,255,255,.55) 6%, rgba(255,255,255,.14) 12%);
+  animation:ribbon 6s linear infinite;
+}
+
+@keyframes ribbon{
+  to{ transform:translateX(-50%); }
+}
+
+@keyframes riseIn{
+  from{opacity:0; transform:translateY(14px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.brand{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.copyright-tag{
+  position:absolute;
+  top:14px;
+  right:18px;
+  z-index:2;
+  font-size:9.5px;
+  font-weight:500;
+  letter-spacing:.2px;
+  color:rgba(255,255,255,.80);
+  white-space:nowrap;
+  pointer-events:none;
+}
+
+.brand-mark{
+  position:relative;
+  width:58px;
+  height:58px;
+  flex-shrink:0;
+  border-radius:17px;
+  background:#FFFFFF;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 10px 26px -8px rgba(30,10,60,.55),
+             0 0 0 3px rgba(255,255,255,.9);
+  animation:bob 5s ease-in-out infinite;
+  z-index:1;
+}
+
+/* วงแหวนแสงสีไล่เฉดหมุนอยู่หลังโลโก้ */
+.brand-mark::before{
+  content:'';
+  position:absolute;
+  inset:-5px;
+  border-radius:20px;
+  background:conic-gradient(from 0deg, #8B5CF6, #EC4899, #38BDF8, #8B5CF6);
+  filter:blur(7px);
+  opacity:.65;
+  z-index:0;
+  animation:auraSpin 5s linear infinite, auraPulse 3s ease-in-out infinite;
+}
+
+@keyframes auraSpin{ to{ transform:rotate(360deg); } }
+@keyframes auraPulse{ 0%,100%{ opacity:.5; } 50%{ opacity:.85; } }
+
+/* โลโก้ลอยขึ้นลงเบาๆ */
+@keyframes bob{
+  0%,100%{ transform:translateY(0) rotate(0deg); }
+  50%    { transform:translateY(-4px) rotate(-2deg); }
+}
+
+/* วงแหวนแสงที่แผ่ออกเป็นจังหวะ */
+.brand-mark::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:17px;
+  border:2px solid rgba(139,92,246,.35);
+  animation:halo 3.6s ease-out infinite;
+  pointer-events:none;
+  z-index:2;
+}
+
+@keyframes halo{
+  0%      { transform:scale(1);    opacity:.55; }
+  60%,100%{ transform:scale(1.45); opacity:0; }
+}
+
+.brand-mark svg{
+  width:35px;
+  height:35px;
+  overflow:visible;
+  /* เงาเข้มใต้ตัวหมวก + แสงส้มเรืองรอบๆ ให้ลอยเด่นออกจากพื้น */
+  filter:drop-shadow(0 2px 4px rgba(76,29,149,.30));
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+  z-index:1;
+}
+
+.header:hover .brand-mark svg{
+  transform:scale(1.1) rotate(-6deg);
+}
+
+/* พู่หมวกครุยแกว่งไปมา */
+.tassel{
+  transform-origin:84px 42px;
+  animation:swing 3.4s ease-in-out infinite;
+}
+
+@keyframes swing{
+  0%,100%{ transform:rotate(-13deg); }
+  50%    { transform:rotate(13deg); }
+}
+
+.brand h1{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-.3px;
+  line-height:1.25;
+  background:linear-gradient(90deg,#FFFFFF 0%,#FDF4FF 22%,#FFFFFF 45%,#F3E8FF 68%,#FFFFFF 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 2px 4px rgba(30,10,60,.45), 0 4px 18px rgba(76,29,149,.55);
+  animation:shine 5s linear infinite;
+}
+
+@keyframes shine{
+  to{ background-position:-200% center; }
+}
+
+.brand p{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:4px;
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.85);
+}
+
+/* ไฟสถานะกะพริบ บอกว่าระบบออนไลน์ */
+.live-dot{
+  position:relative;
+  width:7px;
+  height:7px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:#2ED573;
+}
+
+.live-dot::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:#2ED573;
+  animation:ping 2s cubic-bezier(0,0,.2,1) infinite;
+}
+
+@keyframes ping{
+  0%      { transform:scale(1);   opacity:.8; }
+  75%,100%{ transform:scale(2.8); opacity:0; }
+}
+
+.info{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center;
+  gap:8px;
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px dashed rgba(255,255,255,.25);
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:500;
+  color:#F5F3FF;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.30);
+  padding:6px 12px;
+  border-radius:9px;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.chip i{ font-size:11px; color:#C4B5FD; }
+
+.chip.update-chip{
+  margin-left:auto;
+  cursor:pointer;
+  color:#FFF0F7;
+  background:#DB2777;
+  border-color:#9D174D;
+  font-weight:700;
+  box-shadow:0 4px 12px -4px rgba(131,24,67,.65),
+             inset 0 1px 0 rgba(255,255,255,.22);
+  transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.chip.update-chip i{ color:#FBCFE8; }
+
+.chip.update-chip:hover{
+  background:#EC4899;
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px -5px rgba(131,24,67,.8),
+             inset 0 1px 0 rgba(255,255,255,.28);
+}
+
+.chip.update-chip:active{ transform:translateY(0) scale(.97); }
+
+.chip.update-chip.busy{ cursor:progress; opacity:.75; }
+.chip.update-chip.busy i{ animation:spin 1s linear infinite; }
+
+/* ---------- SECTION LABEL ---------- */
+
+.section-label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:30px 2px 14px;
+  font-size:14px;
+  font-weight:700;
+  /* ไม่ใส่ letter-spacing กับข้อความไทย เพราะสระและวรรณยุกต์
+     ต้องเกาะติดพยัญชนะ ถ้าดันให้ห่างจะอ่านยากและดูขาดเป็นตัวๆ */
+  letter-spacing:0;
+  color:var(--ink-2);
+  animation:riseIn .5s cubic-bezier(.22,1,.36,1) both .08s;
+}
+
+/* รวมทุกคำเป็นก้อนเดียว ไม่งั้น gap:10px ของ flex จะแทรกระหว่างคำ */
+.label-text{ white-space:nowrap; }
+
+.section-label::before{
+  content:'';
+  width:9px;
+  height:9px;
+  border-radius:3px;
+  background:#5B21B6;
+  box-shadow:0 0 0 3px rgba(91,33,182,.22);
+  animation:dotPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes dotPulse{
+  0%,100%{ transform:scale(1) rotate(0deg);    box-shadow:0 0 0 3px rgba(91,33,182,.22); }
+  50%    { transform:scale(1.3) rotate(45deg); box-shadow:0 0 0 6px rgba(91,33,182,.10); }
+}
+
+.section-label::after{
+  content:'';
+  flex:1;
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg, var(--line-2), transparent);
+}
+
+/* ---------- CARDS ---------- */
+
+.card{
+  --c:var(--ink);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:
+    linear-gradient(100deg, color-mix(in srgb, var(--c) 9%, #fff) 0%, #fff 62%);
+  border:1px solid color-mix(in srgb, var(--c) 26%, var(--line));
+  border-left:5px solid var(--c);
+  border-radius:16px;
+  padding:14px 16px;
+  margin-bottom:11px;
+  text-decoration:none;
+  color:inherit;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 2px 4px rgba(33,30,26,.07);
+  transition:transform .22s cubic-bezier(.22,1,.36,1),
+             box-shadow .22s ease,
+             border-color .22s ease,
+             background .22s ease;
+  opacity:0;
+  animation:riseIn .5s cubic-bezier(.22,1,.36,1) forwards;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ไฮไลต์สีที่แผ่ออกตอน hover */
+.card::before{
+  content:'';
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:100%;
+  background:linear-gradient(100deg, color-mix(in srgb, var(--c) 20%, #fff) 0%, transparent 70%);
+  opacity:0;
+  transition:opacity .28s ease;
+  pointer-events:none;
+}
+
+.card:hover::before{ opacity:1; }
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:var(--c);
+  box-shadow:0 12px 26px -12px color-mix(in srgb, var(--c) 70%, transparent),
+             0 4px 8px rgba(33,30,26,.10);
+}
+
+.card:active{ transform:translateY(-1px) scale(.995); }
+
+.card:nth-child(1){animation-delay:.10s;}
+.card:nth-child(2){animation-delay:.16s;}
+.card:nth-child(3){animation-delay:.22s;}
+.card:nth-child(4){animation-delay:.28s;}
+.card:nth-child(5){animation-delay:.34s;}
+.card:nth-child(6){animation-delay:.40s;}
+.card:nth-child(7){animation-delay:.46s;}
+.card:nth-child(8){animation-delay:.52s;}
+.card:nth-child(9){animation-delay:.58s;}
+
+.icon{
+  position:relative;
+  z-index:1;
+  width:46px;
+  height:46px;
+  flex-shrink:0;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:19px;
+  color:#fff;
+  background:var(--c);
+  box-shadow:0 5px 12px -5px color-mix(in srgb, var(--c) 90%, transparent),
+             inset 0 1px 0 rgba(255,255,255,.28);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease;
+}
+
+.card:hover .icon{
+  transform:scale(1.08) rotate(-6deg);
+  box-shadow:0 8px 18px -6px color-mix(in srgb, var(--c) 95%, transparent),
+             inset 0 1px 0 rgba(255,255,255,.28);
+}
+
+.text{
+  position:relative;
+  z-index:1;
+  min-width:0;
+  flex:1;
+}
+
+.text h2{
+  font-size:15.5px;
+  font-weight:600;
+  letter-spacing:-.2px;
+  line-height:1.35;
+}
+
+.text span.sub{
+  display:block;
+  margin-top:1px;
+  font-size:11.5px;
+  font-weight:500;
+  color:var(--ink-3);
+  letter-spacing:.2px;
+}
+
+.badge{
+  display:inline-block;
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:0;
+  color:#8A6100;
+  background:#FFF3BF;
+  border:1px solid #FFE066;
+  padding:1.5px 7px;
+  border-radius:6px;
+  margin-left:7px;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+
+.arrow{
+  position:relative;
+  z-index:1;
+  flex-shrink:0;
+  width:28px;
+  height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  font-size:12px;
+  color:var(--c);
+  background:color-mix(in srgb, var(--c) 13%, #fff);
+  transition:transform .22s cubic-bezier(.22,1,.36,1), color .22s ease, background .22s ease;
+}
+
+.card:hover .arrow{
+  transform:translateX(3px);
+  color:#fff;
+  background:var(--c);
+}
+
+/* การ์ดที่ปิดใช้งานชั่วคราว — ทำให้จางลงแต่ยังมองเห็นอยู่ */
+.card.disabled{
+  --c:var(--ink-3);
+  cursor:default;
+  opacity:.5;
+  background:#F7F4EE;
+  border-color:var(--line);
+  filter:saturate(.5);
+}
+
+.card.disabled .text h2{ color:var(--ink-2); }
+
+.card.disabled:hover{
+  transform:none;
+  border-color:var(--line);
+  box-shadow:0 2px 4px rgba(33,30,26,.07);
+}
+
+.card.disabled:hover::before{ opacity:0; }
+.card.disabled:hover .icon{ transform:none; }
+.card.disabled:hover .arrow{ transform:none; }
+
+/* สถานะกำลังตรวจสอบ server */
+.card.checking{ opacity:.7; cursor:progress; }
+.card.checking .arrow i{ animation:spin 1s linear infinite; }
+
+@keyframes spin{ to{transform:rotate(360deg);} }
+
+/* ---------- FOOTER ---------- */
+
+.footer{
+  margin-top:26px;
+  text-align:center;
+  font-size:12px;
+  color:var(--ink-2);
+  line-height:2;
+  animation:riseIn .5s cubic-bezier(.22,1,.36,1) both .55s;
+}
+
+.footer .ver{
+  display:inline-block;
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.6px;
+  color:#FFF3E2;
+  background:var(--ink);
+  padding:3px 12px;
+  border-radius:999px;
+}
+
+.footer .heart{ color:var(--c-server); }
+
+/* ---------- MODAL ---------- */
+
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(26,26,26,.42);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  z-index:999;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+
+.modal-bg.show{ opacity:1; pointer-events:auto; }
+
+.modal-box{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:28px 26px 22px;
+  max-width:340px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 24px 60px -20px rgba(26,26,26,.4);
+  transform:translateY(12px) scale(.96);
+  transition:transform .25s cubic-bezier(.22,1,.36,1);
+}
+
+.modal-bg.show .modal-box{ transform:translateY(0) scale(1); }
+
+.modal-box .m-icon{
+  width:52px;
+  height:52px;
+  margin:0 auto 15px;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  color:var(--c-server);
+  background:#FFF0F0;
+  border:1px solid #FFC9C9;
+}
+
+.modal-box h3{
+  font-size:16.5px;
+  font-weight:700;
+  margin-bottom:7px;
+  letter-spacing:-.2px;
+}
+
+.modal-box p{
+  font-size:13px;
+  color:var(--ink-2);
+  line-height:1.65;
+  margin-bottom:20px;
+}
+
+.modal-box button{
+  font-family:inherit;
+  font-size:14px;
+  font-weight:600;
+  color:#fff;
+  background:var(--ink);
+  border:none;
+  border-radius:11px;
+  padding:11px 34px;
+  cursor:pointer;
+  transition:background .18s ease, transform .18s ease;
+}
+
+.modal-box button:hover{ background:#333; transform:translateY(-1px); }
+.modal-box button:active{ transform:translateY(0) scale(.98); }
+
+/* ---------- RESPONSIVE ---------- */
+
+/* จอมือถือ: ย่อชิปข้อมูลเหลือแค่ไอคอน เพื่อให้ปุ่ม Update อยู่บรรทัดเดียวกัน */
+@media (max-width:520px){
+  .info{ gap:6px; }
+  .chip{ padding:7px 10px; }
+  .chip:not(.update-chip) .chip-label{
+    position:absolute;
+    width:1px; height:1px;
+    padding:0; margin:-1px;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    white-space:nowrap;
+  }
+  .chip:not(.update-chip) i{ font-size:12.5px; }
+}
+
+@media (max-width:380px){
+  .brand h1{ font-size:19.5px; }
+  .text h2{ font-size:14.5px; }
+  .chip{ padding:7px 9px; font-size:11.5px; }
+  .icon{ width:42px; height:42px; font-size:17px; border-radius:12px; }
+  .card{ gap:12px; padding:13px 14px; }
+}
+
+/* จอแคบมาก (เช่น iPhone SE): ตัดชิปข้อมูลออก เหลือแต่ปุ่ม Update
+   กันไม่ให้ล้นออกนอกกรอบตอนข้อความในปุ่มเปลี่ยนเป็น "กำลังโหลดใหม่..." */
+@media (max-width:345px){
+  .chip:not(.update-chip){ display:none; }
+  .chip.update-chip{ margin-left:0; }
+}
+
+/* เคารพการตั้งค่า "ลดการเคลื่อนไหว" ของระบบผู้ใช้ */
+@media (prefers-reduced-motion:reduce){
+  *{ animation-duration:.01ms !important; animation-iteration-count:1 !important;
+     transition-duration:.01ms !important; }
+  .card{ opacity:1; }
+  .brand-mark::after,
+  .live-dot::after{ display:none; }
+}
+
+
+/* ล็อกคำไทยไม่ให้ถูกฉีกกลางคำ — แต่ละ  คือหนึ่งคำ
+   เบราว์เซอร์ตัดบรรทัดได้เฉพาะ "ระหว่าง" span เท่านั้น
+   (แท็ก wbr ใช้ไม่ได้ผล เพราะมันแค่เพิ่มจุดตัด ไม่ได้ห้ามตัดที่อื่น) */
+.w{ white-space:nowrap; }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="header">
+
+  <div class="copyright-tag">ลิขสิทธิ์ลำดับที่ SC001</div>
+
+  <div class="brand">
+    <div class="brand-mark">
+      <!-- หมวกครุย: พู่ด้านขวาแกว่งไปมา -->
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <linearGradient id="capTop" x1="0" y1="0" x2="0.4" y2="1">
+            <stop offset="0%" stop-color="#A78BFA"/>
+            <stop offset="55%" stop-color="#8B5CF6"/>
+            <stop offset="100%" stop-color="#6D28D9"/>
+          </linearGradient>
+          <linearGradient id="capCup" x1="0" y1="0" x2="0.2" y2="1">
+            <stop offset="0%" stop-color="#7C3AED"/>
+            <stop offset="100%" stop-color="#5B21B6"/>
+          </linearGradient>
+        </defs>
+        <path d="M28 48 V66 C28 66 37 74 50 74 C63 74 72 66 72 66 V48 L50 59 Z" fill="url(#capCup)"/>
+        <path d="M50 26 L84 42 L50 58 L16 42 Z" fill="url(#capTop)"/>
+        <g class="tassel">
+          <path d="M84 42 V63" stroke="#EC4899" stroke-width="3.6" stroke-linecap="round" fill="none"/>
+          <circle cx="84" cy="68" r="4.6" fill="#F472B6"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <h1><span class="w">โรงเรียน</span><span class="w">วัดหนองยาง</span></h1>
+      <p><span class="live-dot"></span>Digital School Platform</p>
+    </div>
+  </div>
+
+  <div class="info">
+    <span class="chip" title="Mobile Friendly"><i class="fa-solid fa-mobile-screen"></i><span class="chip-label">Mobile Friendly</span></span>
+    <span class="chip" title="Cloud"><i class="fa-solid fa-cloud"></i><span class="chip-label">Cloud</span></span>
+    <span class="chip" title="Secure"><i class="fa-solid fa-shield-halved"></i><span class="chip-label">Secure</span></span>
+    <span class="chip update-chip" id="updateApp" role="button" tabindex="0" title="ล้างแคชและโหลดเวอร์ชันล่าสุด">
+      <i class="fa-solid fa-rotate"></i><span id="updateAppTxt">Update App</span>
+    </span>
+  </div>
+
+</header>
+
+<div class="section-label"><span class="label-text"><span class="w">เมนู</span><span class="w">ระบบ</span><span class="w">ทั้งหมด</span></span></div>
+
+<nav class="menu">
+
+  <a class="card" style="--c:var(--c-plan)" href="https://script.google.com/macros/s/AKfycbwcfTKhXdfH6qqt-hxKQ1Bbc8Jc9-gmHoH0VYEd2akxO4vFZC6stW6VQgJ7X4n_sHOyOg/exec" target="_blank">
+    <div class="icon"><i class="fa-solid fa-diagram-project"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">แผนงาน</span><span class="w">และ</span><span class="w">โครงการ</span></h2>
+      <span class="sub">Project Management System</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a class="card" style="--c:var(--c-attend)" href="https://script.google.com/macros/s/AKfycbwCrPjvqD7qKzSFUO8cGpWdxq0yqscNxnSj4tCW9X3oQT0s_Yj5iGZXTaZCVGeA0Clt/exec" target="_blank">
+    <div class="icon"><i class="fa-solid fa-user-clock"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">เช็คเวลา</span><span class="w">มาเรียน</span><span class="w">ของ</span><span class="w">นักเรียน</span></h2>
+      <span class="sub">Student Time Attendance</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a class="card" style="--c:var(--c-leave)" href="https://script.google.com/macros/s/AKfycbyov6AOgbcA6_t-hU9BlykmB7UekMblkov-vzStaTsqfYIBnES6SxIJZ1eGO_Owx2sL/exec" target="_blank">
+    <div class="icon"><i class="fa-solid fa-file-signature"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">การลา</span><span class="w">และ</span><span class="w">ขออนุญาต</span><span class="w">ออก</span><span class="w">นอกสถานที่</span></h2>
+      <span class="sub">Leave &amp; Off-Site Permission System</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a class="card disabled" style="--c:var(--c-ai)" href="#" onclick="return false;">
+    <div class="icon"><i class="fa-solid fa-calendar-days"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">จัดตารางสอน</span><span class="w">อัตโนมัติ</span><span class="w">ด้วย</span> <span class="w">AI</span><span class="badge">ปิดใช้งาน</span></h2>
+      <span class="sub">AI Auto-Scheduling System</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a class="card disabled" style="--c:var(--c-safety)" href="#" onclick="return false;">
+    <div class="icon"><i class="fa-solid fa-tower-broadcast"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">เฝ้าระวัง</span><span class="w">และ</span><span class="w">แจ้งเตือน</span><span class="w">ความปลอดภัย</span><span class="w">ใน</span><span class="w">สถานศึกษา</span><span class="badge">ปิดใช้งาน</span></h2>
+      <span class="sub">School Safety Monitoring &amp; Alert System</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a class="card disabled" style="--c:var(--c-hr)" href="#" onclick="return false;">
+    <div class="icon"><i class="fa-solid fa-users-gear"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">สารสนเทศ</span><span class="w">บริหาร</span><span class="w">งานบุคคล</span><span class="badge">ปิดใช้งาน</span></h2>
+      <span class="sub">Human Resource Information System</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a class="card disabled" style="--c:var(--c-server)" href="#" onclick="return false;">
+    <div class="icon"><i class="fa-solid fa-server"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">ศูนย์ควบคุม</span> <span class="w">Server</span><span class="badge">ปิดใช้งาน</span></h2>
+      <span class="sub">TPW Server</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a class="card disabled" style="--c:var(--c-store)" href="#" onclick="return false;">
+    <div class="icon"><i class="fa-solid fa-store"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">สวัสดิการ</span><span class="w">ร้านค้า</span><span class="w">ออนไลน์</span><span class="badge">ปิดใช้งาน</span></h2>
+      <span class="sub">Online Welfare Store System</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+  <a class="card disabled" style="--c:var(--c-data)" href="#">
+    <div class="icon"><i class="fa-solid fa-database"></i></div>
+    <div class="text">
+      <h2><span class="w">ระบบ</span><span class="w">คลังข้อมูล</span><span class="badge">เร็วๆ นี้</span></h2>
+      <span class="sub">Data Warehouse System</span>
+    </div>
+    <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
+  </a>
+
+</nav>
+
+<footer class="footer">
+  <span class="ver">VERSION 1.1</span><br>
+  Developed with <span class="heart">&hearts;</span> by Kittisak
+</footer>
+
+</div>
+
+<script>
+/* ---------- Update App : ล้างแคชและโหลดเวอร์ชันล่าสุดจาก GitHub ---------- */
+(function(){
+  var chip = document.getElementById('updateApp');
+  var txt  = document.getElementById('updateAppTxt');
+  if(!chip) return;
+
+  async function doUpdate(){
+    if(chip.classList.contains('busy')) return;
+    chip.classList.add('busy');
+    txt.textContent = 'กำลังอัปเดต...';
+
+    try{
+      // 1) ยกเลิก Service Worker ทั้งหมด
+      if('serviceWorker' in navigator){
+        var regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(function(r){ return r.unregister(); }));
+      }
+
+      // 2) ล้าง Cache Storage ของ PWA ทั้งหมด
+      if('caches' in window){
+        var keys = await caches.keys();
+        await Promise.all(keys.map(function(k){ return caches.delete(k); }));
+      }
+    }catch(err){
+      console.warn('update cleanup failed:', err);
+    }
+
+    // 3) โหลดหน้าใหม่พร้อม query กันแคชของเบราว์เซอร์/CDN
+    txt.textContent = 'กำลังโหลดใหม่...';
+    location.replace(location.origin + location.pathname + '?v=' + Date.now());
+  }
+
+  chip.addEventListener('click', doUpdate);
+  chip.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); doUpdate(); }
+  });
+})();
+</script>
+
+</body>
+
+</html>
